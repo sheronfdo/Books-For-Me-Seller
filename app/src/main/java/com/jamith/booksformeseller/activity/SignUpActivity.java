@@ -1,10 +1,12 @@
 package com.jamith.booksformeseller.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -15,11 +17,9 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.jamith.booksformeseller.R;
+import com.jamith.booksformeseller.dto.SellerSignUpResponseDTO;
 import com.jamith.booksformeseller.model.Seller;
 import com.jamith.booksformeseller.service.SignUpService;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class SignUpActivity extends AppCompatActivity {
 
@@ -28,6 +28,7 @@ public class SignUpActivity extends AppCompatActivity {
     private EditText etCompanyName, etBusinessRegistrationNumber;
     private Spinner spSellerType;
     private Button btnSignUp;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +54,7 @@ public class SignUpActivity extends AppCompatActivity {
         etBusinessRegistrationNumber = findViewById(R.id.etBusinessRegistrationNumber);
         spSellerType = findViewById(R.id.spinnerSellerType);
         btnSignUp = findViewById(R.id.btnSignUp);
+        progressBar = findViewById(R.id.progressBar);
 
         btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,16 +83,37 @@ public class SignUpActivity extends AppCompatActivity {
                     email, password, phoneNumber, street, city,
                     state, postalCode, country,
                     companyName, businessRegistrationNumber);
-
-
-
             Log.d("sign up data", seller.toString());
-
             SignUpService signUpService = new SignUpService();
-            signUpService.sendSellerSignUpData(seller);
+            signUpService.sendSellerSignUpData(seller, new SignUpService.SignUpCallback() {
+                @Override
+                public void onSuccess(SellerSignUpResponseDTO response) {
+                    runOnUiThread(() -> {
+                        progressBar.setVisibility(View.GONE);
+                        Toast.makeText(SignUpActivity.this, "Seller registered successfully!", Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(SignUpActivity.this, SignInActivity.class);
+                        startActivity(intent);
+                        finish();
+                    });
+                }
 
+                @Override
+                public void onError(String errorMessage) {
+                    runOnUiThread(() -> {
+                        progressBar.setVisibility(View.GONE);
+                        Toast.makeText(SignUpActivity.this, "Error: " + errorMessage, Toast.LENGTH_LONG).show();
+                    });
+                }
+
+                @Override
+                public void onFailure(String failureMessage) {
+                    runOnUiThread(() -> {
+                        progressBar.setVisibility(View.GONE);
+                        Toast.makeText(SignUpActivity.this, "Failure: " + failureMessage, Toast.LENGTH_LONG).show();
+                    });
+                }
+            });
             Toast.makeText(this, "Seller details collected successfully: " + sellerType, Toast.LENGTH_LONG).show();
-
         }
     }
 
@@ -113,6 +136,4 @@ public class SignUpActivity extends AppCompatActivity {
         }
         return true;
     }
-
-
 }
