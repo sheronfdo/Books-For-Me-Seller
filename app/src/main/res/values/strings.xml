@@ -3,7 +3,7 @@
     <string name="sign_in_button">Sign In</string>
     <string name="sign_up_button">Sign Up</string>
 
-
+<!--  Sign Up Page  -->
     <string name="sign_up_page_text">Seller Sign Up</string>
     <string-array name="seller_types">
         <item>Individual</item>
@@ -20,4 +20,11 @@
     <string name="sign_up_page_country_text_hint">Country</string>
     <string name="sign_up_page_company_name_text_hint">Company Name</string>
     <string name="sign_up_page_br_reg_number_text_hint">Business Registration Number</string>
+    <string name="sign_up_page_button_text">Sign Up</string>
+
+<!--  Sign In Page  -->
+    <string name="sign_in_page_text">Seller Sign Up</string>
+    <string name="sign_in_page_email_text_hint">Email</string>
+    <string name="sign_in_page_password_text_hint">Password</string>
+    <string name="sign_in_page_button_text">Sign In</string>
 </resources>

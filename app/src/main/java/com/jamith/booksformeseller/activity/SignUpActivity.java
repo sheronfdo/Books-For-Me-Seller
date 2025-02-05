@@ -1,0 +1,118 @@
+package com.jamith.booksformeseller.activity;
+
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.Toast;
+
+import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
+
+import com.jamith.booksformeseller.R;
+import com.jamith.booksformeseller.model.Seller;
+import com.jamith.booksformeseller.service.SignUpService;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class SignUpActivity extends AppCompatActivity {
+
+    private EditText etFullNameOrRepresentative, etEmail, etPassword, etPhoneNumber;
+    private EditText etStreet, etCity, etState, etPostalCode, etCountry;
+    private EditText etCompanyName, etBusinessRegistrationNumber;
+    private Spinner spSellerType;
+    private Button btnSignUp;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
+        setContentView(R.layout.activity_sign_up);
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
+
+        etFullNameOrRepresentative = findViewById(R.id.etFullName);
+        etEmail = findViewById(R.id.etEmail);
+        etPassword = findViewById(R.id.etPassword);
+        etPhoneNumber = findViewById(R.id.etPhoneNumber);
+        etStreet = findViewById(R.id.etStreet);
+        etCity = findViewById(R.id.etCity);
+        etState = findViewById(R.id.etState);
+        etPostalCode = findViewById(R.id.etPostalCode);
+        etCountry = findViewById(R.id.etCountry);
+        etCompanyName = findViewById(R.id.etCompanyName);
+        etBusinessRegistrationNumber = findViewById(R.id.etBusinessRegistrationNumber);
+        spSellerType = findViewById(R.id.spinnerSellerType);
+        btnSignUp = findViewById(R.id.btnSignUp);
+
+        btnSignUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gatherSellerDetails();
+            }
+        });
+    }
+
+    private void gatherSellerDetails() {
+        String fullNameOrRepresentative = etFullNameOrRepresentative.getText().toString().trim();
+        String email = etEmail.getText().toString().trim();
+        String password = etPassword.getText().toString().trim();
+        String phoneNumber = etPhoneNumber.getText().toString().trim();
+        String street = etStreet.getText().toString().trim();
+        String city = etCity.getText().toString().trim();
+        String state = etState.getText().toString().trim();
+        String postalCode = etPostalCode.getText().toString().trim();
+        String country = etCountry.getText().toString().trim();
+        String companyName = etCompanyName.getText().toString().trim();
+        String businessRegistrationNumber = etBusinessRegistrationNumber.getText().toString().trim();
+        String sellerType = spSellerType.getSelectedItem().toString();
+
+        if (validateInputs(fullNameOrRepresentative, email, password, phoneNumber)) {
+            Seller seller = new Seller(sellerType, fullNameOrRepresentative,
+                    email, password, phoneNumber, street, city,
+                    state, postalCode, country,
+                    companyName, businessRegistrationNumber);
+
+
+
+            Log.d("sign up data", seller.toString());
+
+            SignUpService signUpService = new SignUpService();
+            signUpService.sendSellerSignUpData(seller);
+
+            Toast.makeText(this, "Seller details collected successfully: " + sellerType, Toast.LENGTH_LONG).show();
+
+        }
+    }
+
+    private boolean validateInputs(String fullName, String email, String password, String phoneNumber) {
+        if (fullName.isEmpty()) {
+            etFullNameOrRepresentative.setError("Full Name or Representative is required");
+            return false;
+        }
+        if (email.isEmpty()) {
+            etEmail.setError("Email is required");
+            return false;
+        }
+        if (password.isEmpty()) {
+            etPassword.setError("Password is required");
+            return false;
+        }
+        if (phoneNumber.isEmpty()) {
+            etPhoneNumber.setError("Phone Number is required");
+            return false;
+        }
+        return true;
+    }
+
+
+}
