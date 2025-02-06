@@ -12,6 +12,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.jamith.booksformeseller.R;
+import com.jamith.booksformeseller.activity.signup.SignUpActivity;
 
 public class MainActivity extends AppCompatActivity {
 

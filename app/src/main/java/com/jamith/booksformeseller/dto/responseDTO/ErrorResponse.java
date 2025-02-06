@@ -1,4 +1,4 @@
-package com.jamith.booksformeseller.dto;
+package com.jamith.booksformeseller.dto.responseDTO;
 
 import lombok.Data;
 

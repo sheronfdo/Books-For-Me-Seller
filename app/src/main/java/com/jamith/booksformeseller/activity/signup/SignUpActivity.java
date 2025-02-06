@@ -1,4 +1,4 @@
-package com.jamith.booksformeseller.activity;
+package com.jamith.booksformeseller.activity.signup;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,13 +17,13 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.jamith.booksformeseller.R;
-import com.jamith.booksformeseller.dto.SellerSignUpResponseDTO;
-import com.jamith.booksformeseller.model.Seller;
+import com.jamith.booksformeseller.dto.requestDTO.SellerSignUpRequest;
+import com.jamith.booksformeseller.dto.responseDTO.SellerSignUpResponseDTO;
 import com.jamith.booksformeseller.service.SignUpService;
 
 public class SignUpActivity extends AppCompatActivity {
 
-    private EditText etFullNameOrRepresentative, etEmail, etPassword, etPhoneNumber;
+    private EditText etFullNameOrRepresentative, etEmail, etPassword, etPhoneNumber, etConfirmPassword;
     private EditText etStreet, etCity, etState, etPostalCode, etCountry;
     private EditText etCompanyName, etBusinessRegistrationNumber;
     private Spinner spSellerType;
@@ -45,16 +45,10 @@ public class SignUpActivity extends AppCompatActivity {
         etEmail = findViewById(R.id.etEmail);
         etPassword = findViewById(R.id.etPassword);
         etPhoneNumber = findViewById(R.id.etPhoneNumber);
-        etStreet = findViewById(R.id.etStreet);
-        etCity = findViewById(R.id.etCity);
-        etState = findViewById(R.id.etState);
-        etPostalCode = findViewById(R.id.etPostalCode);
-        etCountry = findViewById(R.id.etCountry);
-        etCompanyName = findViewById(R.id.etCompanyName);
-        etBusinessRegistrationNumber = findViewById(R.id.etBusinessRegistrationNumber);
         spSellerType = findViewById(R.id.spinnerSellerType);
         btnSignUp = findViewById(R.id.btnSignUp);
         progressBar = findViewById(R.id.progressBar);
+        etConfirmPassword = findViewById(R.id.etConfirmPassword);
 
         btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,29 +63,22 @@ public class SignUpActivity extends AppCompatActivity {
         String email = etEmail.getText().toString().trim();
         String password = etPassword.getText().toString().trim();
         String phoneNumber = etPhoneNumber.getText().toString().trim();
-        String street = etStreet.getText().toString().trim();
-        String city = etCity.getText().toString().trim();
-        String state = etState.getText().toString().trim();
-        String postalCode = etPostalCode.getText().toString().trim();
-        String country = etCountry.getText().toString().trim();
-        String companyName = etCompanyName.getText().toString().trim();
-        String businessRegistrationNumber = etBusinessRegistrationNumber.getText().toString().trim();
+        String confirmPassword = etConfirmPassword.getText().toString().trim();
         String sellerType = spSellerType.getSelectedItem().toString();
 
-        if (validateInputs(fullNameOrRepresentative, email, password, phoneNumber)) {
-            Seller seller = new Seller(sellerType, fullNameOrRepresentative,
-                    email, password, phoneNumber, street, city,
-                    state, postalCode, country,
-                    companyName, businessRegistrationNumber);
-            Log.d("sign up data", seller.toString());
+        if (validateInputs(fullNameOrRepresentative, email, password, confirmPassword, phoneNumber)) {
+            SellerSignUpRequest sellerSignUpRequest = new SellerSignUpRequest(sellerType, fullNameOrRepresentative,
+                    email, password, phoneNumber);
+            Log.d("sign up data", sellerSignUpRequest.toString());
             SignUpService signUpService = new SignUpService();
-            signUpService.sendSellerSignUpData(seller, new SignUpService.SignUpCallback() {
+            signUpService.sendSellerSignUpData(sellerSignUpRequest, new SignUpService.SignUpCallback() {
                 @Override
                 public void onSuccess(SellerSignUpResponseDTO response) {
                     runOnUiThread(() -> {
                         progressBar.setVisibility(View.GONE);
                         Toast.makeText(SignUpActivity.this, "Seller registered successfully!", Toast.LENGTH_LONG).show();
-                        Intent intent = new Intent(SignUpActivity.this, SignInActivity.class);
+                        Intent intent = new Intent(SignUpActivity.this, SignUpAddressActivity.class);
+                        intent.putExtra("userId", response.getId());
                         startActivity(intent);
                         finish();
                     });
@@ -117,7 +104,7 @@ public class SignUpActivity extends AppCompatActivity {
         }
     }
 
-    private boolean validateInputs(String fullName, String email, String password, String phoneNumber) {
+    private boolean validateInputs(String fullName, String email, String password, String confirmPassword, String phoneNumber) {
         if (fullName.isEmpty()) {
             etFullNameOrRepresentative.setError("Full Name or Representative is required");
             return false;
@@ -128,6 +115,10 @@ public class SignUpActivity extends AppCompatActivity {
         }
         if (password.isEmpty()) {
             etPassword.setError("Password is required");
+            return false;
+        }
+        if (!password.equals(confirmPassword)) {
+            etConfirmPassword.setError("Password is not equal");
             return false;
         }
         if (phoneNumber.isEmpty()) {

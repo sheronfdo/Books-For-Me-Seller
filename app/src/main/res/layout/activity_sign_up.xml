@@ -5,11 +5,11 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.SignUpActivity">
+    tools:context=".activity.signup.SignUpActivity">
 
     <!-- Title -->
     <TextView
-        android:id="@+id/tvTitle"
+        android:id="@+id/sign_up_page_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
@@ -30,7 +30,7 @@
         android:entries="@array/seller_types"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvTitle" />
+        app:layout_constraintTop_toBottomOf="@id/sign_up_page_title" />
 
     <!-- Full Name / Representative -->
     <EditText
@@ -58,6 +58,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/etFullName" />
 
+    <EditText
+        android:id="@+id/etPhoneNumber"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:layout_marginTop="112dp"
+        android:hint="@string/sign_up_page_phone_number_text_hint"
+        android:inputType="phone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/etEmail" />
+
     <!-- Password -->
     <EditText
         android:id="@+id/etPassword"
@@ -69,118 +81,30 @@
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/etEmail" />
+        app:layout_constraintTop_toBottomOf="@id/etPhoneNumber" />
 
-    <!-- Phone Number -->
+    <!-- Password -->
     <EditText
-        android:id="@+id/etPhoneNumber"
+        android:id="@+id/etConfirmPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:layout_marginTop="8dp"
-        android:hint="@string/sign_up_page_phone_number_text_hint"
-        android:inputType="phone"
+        android:hint="@string/sign_up_page_confirm_password_text_hint"
+        android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/etPassword" />
 
-    <!-- Address Section -->
-    <EditText
-        android:id="@+id/etStreet"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:layout_marginTop="8dp"
-        android:hint="@string/sign_up_page_street_text_hint"
-        android:inputType="textPostalAddress"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/etPhoneNumber" />
-
-    <EditText
-        android:id="@+id/etCity"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:layout_marginTop="8dp"
-        android:hint="@string/sign_up_page_city_text_hint"
-        android:inputType="text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/etStreet" />
-
-    <EditText
-        android:id="@+id/etState"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:layout_marginTop="8dp"
-        android:hint="@string/sign_up_page_state_text_hint"
-        android:inputType="text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/etCity" />
-
-    <EditText
-        android:id="@+id/etPostalCode"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:layout_marginTop="8dp"
-        android:hint="@string/sign_up_page_postal_code_text_hint"
-        android:inputType="number"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/etState" />
-
-    <EditText
-        android:id="@+id/etCountry"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:layout_marginTop="8dp"
-        android:hint="@string/sign_up_page_country_text_hint"
-        android:inputType="text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/etPostalCode" />
-
-    <!-- Company Information -->
-    <EditText
-        android:id="@+id/etCompanyName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:layout_marginTop="8dp"
-        android:hint="@string/sign_up_page_company_name_text_hint"
-        android:inputType="text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/etCountry" />
-
-    <EditText
-        android:id="@+id/etBusinessRegistrationNumber"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:layout_marginTop="8dp"
-        android:hint="@string/sign_up_page_br_reg_number_text_hint"
-        android:inputType="text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/etCompanyName" />
-
-    <!-- Sign Up Button -->
     <Button
         android:id="@+id/btnSignUp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/sign_up_page_br_reg_number_text_hint"
+        android:text="@string/sign_up_page_button_text"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/etBusinessRegistrationNumber" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ProgressBar
         android:id="@+id/progressBar"

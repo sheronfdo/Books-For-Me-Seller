@@ -12,15 +12,26 @@
     <string name="sign_up_page_name_text_hint">Full Name or Representative</string>
     <string name="sign_up_page_email_text_hint">Email</string>
     <string name="sign_up_page_password_text_hint">Password</string>
+    <string name="sign_up_page_confirm_password_text_hint">Confirm Password</string>
     <string name="sign_up_page_phone_number_text_hint">Phone Number</string>
+    <string name="sign_up_page_button_text">Sign Up</string>
+    <!-- sign up address page  -->
+    <string name="sign_up_address_page_text">Seller Address</string>
     <string name="sign_up_page_street_text_hint">Street</string>
     <string name="sign_up_page_city_text_hint">City</string>
     <string name="sign_up_page_state_text_hint">State</string>
     <string name="sign_up_page_postal_code_text_hint">Postal Code</string>
     <string name="sign_up_page_country_text_hint">Country</string>
+    <string name="sign_up_address_page_button_text">Add Address Details</string>
+    <!--  sign up business details page  -->
+    <string name="sign_up_business_page_text">Seller Business Details</string>
     <string name="sign_up_page_company_name_text_hint">Company Name</string>
     <string name="sign_up_page_br_reg_number_text_hint">Business Registration Number</string>
-    <string name="sign_up_page_button_text">Sign Up</string>
+    <string name="sign_up_business_page_button_text">Add Business Details</string>
+    <!--  sign up image upload page  -->
+    <string name="sign_up_image_page_text">Seller Image</string>
+    <string name="sign_up_image_button_text">Select Seller Image</string>
+    <string name="sign_up_image_button">Add Seller Image</string>
 
     <!--  Sign In Page  -->
     <string name="sign_in_page_text">Seller Sign Up</string>

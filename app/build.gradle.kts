@@ -38,6 +38,7 @@ dependencies {
     implementation(libs.material)
     implementation(libs.activity)
     implementation(libs.constraintlayout)
+    implementation(libs.play.services.maps)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
@@ -49,5 +50,8 @@ dependencies {
     implementation("com.google.firebase:firebase-auth")
     implementation("com.google.firebase:firebase-analytics")
     implementation("com.google.android.material:material:1.9.0")
+    implementation("org.modelmapper:modelmapper:3.2.2")
+    implementation("com.google.firebase:firebase-storage:21.0.1")
+
 
 }
