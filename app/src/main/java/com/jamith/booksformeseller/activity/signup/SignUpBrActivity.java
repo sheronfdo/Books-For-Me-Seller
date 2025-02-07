@@ -117,26 +117,25 @@ public class SignUpBrActivity extends AppCompatActivity {
             Toast.makeText(this, "No file selected", Toast.LENGTH_SHORT).show();
             return;
         } else {
-            new FirebaseStorageService().uploadFile(
-                    brDetailDocuments,
-                    StorageFolders.DOCUMENTS,
-                    new OnSuccessListener() {
-                        @Override
-                        public void onSuccess(Object o) {
-                            brDocDownUrl = o.toString();
-                            Log.d("image upload success", o.toString());
-                        }
-                    }
-                    ,
-                    new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(SignUpBrActivity.this, "Failed to upload file: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    }
-            );
+            new FirebaseStorageService().uploadFile(brDetailDocuments, StorageFolders.DOCUMENTS, new OnSuccessListener() {
+                @Override
+                public void onSuccess(Object o) {
+                    brDocDownUrl = o.toString();
+                    Log.d("image upload success", brDocDownUrl);
+                    saveData(companyName, brNumber, brDocDownUrl);
+                }
+            }, new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(SignUpBrActivity.this, "Failed to upload file: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
         }
 
+
+    }
+
+    private void saveData(String companyName, String brNumber, String brDocDownUrl) {
         SellerSignUpBrRequest sellerSignUpBrRequest = new SellerSignUpBrRequest(userId, companyName, brNumber, brDocDownUrl);
         SignUpService signUpService = new SignUpService();
         signUpService.sendSellerBrDetails(sellerSignUpBrRequest, new SignUpService.SignUpCallback() {

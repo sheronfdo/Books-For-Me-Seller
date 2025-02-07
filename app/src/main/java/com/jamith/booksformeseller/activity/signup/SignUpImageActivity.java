@@ -85,6 +85,7 @@ public class SignUpImageActivity extends AppCompatActivity {
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
             sellerImage = data.getData();
             Toast.makeText(this, "Document selected", Toast.LENGTH_SHORT).show();
+            imageButton.setImageURI(sellerImage);
             Log.d("Image Path", sellerImage.getPath());
         }
     }
@@ -113,25 +114,25 @@ public class SignUpImageActivity extends AppCompatActivity {
             Toast.makeText(this, "No file selected", Toast.LENGTH_SHORT).show();
             return;
         } else {
-            new FirebaseStorageService().uploadFile(
-                    sellerImage,
-                    StorageFolders.IMAGES,
-                    new OnSuccessListener() {
-                        @Override
-                        public void onSuccess(Object o) {
-                            sellerImageDownloadUrl = o.toString();
-                            Log.d("image upload success", o.toString());
-                        }
-                    }
-                    ,
-                    new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(SignUpImageActivity.this, "Failed to upload file: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    }
-            );
+            new FirebaseStorageService().uploadFile(sellerImage, StorageFolders.IMAGES, new OnSuccessListener() {
+                @Override
+                public void onSuccess(Object o) {
+                    sellerImageDownloadUrl = o.toString();
+                    Log.d("image upload success", o.toString());
+                    saveData(sellerImageDownloadUrl);
+                }
+            }, new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(SignUpImageActivity.this, "Failed to upload file: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
         }
+
+
+    }
+
+    private void saveData(String sellerImageDownloadUrl) {
         SellerSignUpImageRequest sellerSignUpImageRequest = new SellerSignUpImageRequest(userId, sellerImageDownloadUrl);
         SignUpService signUpService = new SignUpService();
         signUpService.sendSellerImage(sellerSignUpImageRequest, new SignUpService.SignUpCallback() {
@@ -163,8 +164,6 @@ public class SignUpImageActivity extends AppCompatActivity {
                 });
             }
         });
-
-
     }
 
 }

@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     id("com.google.gms.google-services")
+    id("com.google.firebase.crashlytics")
 }
 
 android {
@@ -52,6 +53,7 @@ dependencies {
     implementation("com.google.android.material:material:1.9.0")
     implementation("org.modelmapper:modelmapper:3.2.2")
     implementation("com.google.firebase:firebase-storage:21.0.1")
+    implementation("com.google.firebase:firebase-crashlytics")
 
 
 }
