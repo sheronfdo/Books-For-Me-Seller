@@ -5,10 +5,118 @@
     android:layout_height="match_parent"
     tools:context=".activity.fragments.ProfileFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:padding="16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- Profile Section Title -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:paddingBottom="16dp"
+                android:text="@string/profileFragmentText"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <!-- Profile Information Button -->
+            <Button
+                android:id="@+id/profileInfoButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="?attr/selectableItemBackground"
+                android:padding="12dp"
+                android:text="Profile Information"
+                android:textAlignment="textStart"
+                android:textColor="@color/black" />
+
+            <!-- Account Settings Button -->
+            <Button
+                android:id="@+id/accountSettingsButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="?attr/selectableItemBackground"
+                android:padding="12dp"
+                android:text="Account Settings"
+                android:textAlignment="textStart"
+                android:textColor="@color/black" />
+
+            <!-- Application Settings Button -->
+            <Button
+                android:id="@+id/applicationSettingsButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="?attr/selectableItemBackground"
+                android:padding="12dp"
+                android:text="Application Settings"
+                android:textAlignment="textStart"
+                android:textColor="@color/black" />
+
+            <!-- Security Settings Button -->
+            <Button
+                android:id="@+id/securitySettingsButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="?attr/selectableItemBackground"
+                android:padding="12dp"
+                android:text="Security Settings"
+                android:textAlignment="textStart"
+                android:textColor="@color/black" />
+
+            <!-- Support & Help Button -->
+            <Button
+                android:id="@+id/supportHelpButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="?attr/selectableItemBackground"
+                android:padding="12dp"
+                android:text="Support &amp; Help"
+                android:textAlignment="textStart"
+                android:textColor="@color/black" />
+
+            <!-- Legal and About Button -->
+            <Button
+                android:id="@+id/legalAboutButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:layout_marginBottom="16dp"
+                android:background="?attr/selectableItemBackground"
+                android:padding="12dp"
+                android:text="Legal and About"
+                android:textAlignment="textStart"
+                android:textColor="@color/black" />
+
+            <!-- Logout Button -->
+            <Button
+                android:id="@+id/logoutButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:background="?attr/selectableItemBackground"
+                android:backgroundTint="@android:color/holo_red_dark"
+                android:padding="12dp"
+                android:text="Logout"
+                android:textAlignment="textStart"
+                android:textColor="@color/black" />
+        </LinearLayout>
+    </ScrollView>
 
 </FrameLayout>
