@@ -1,5 +1,6 @@
 package com.jamith.booksformeseller.model;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -10,7 +11,7 @@ import lombok.ToString;
 @Data
 @NoArgsConstructor
 @ToString
-public class Book {
+public class Book implements Serializable {
     private String bookId;
     private String title;
     private String author;

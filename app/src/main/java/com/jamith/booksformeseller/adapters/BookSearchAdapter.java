@@ -4,9 +4,12 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
 import com.jamith.booksformeseller.R;
 import com.jamith.booksformeseller.model.Book;
 
@@ -38,9 +41,16 @@ public class BookSearchAdapter extends RecyclerView.Adapter<BookSearchAdapter.Vi
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Book book = bookList.get(position);
+        Glide.with(context)
+                .load(book.getCoverImage())
+                .placeholder(R.drawable.books_placeholder)
+                .error(R.drawable.books_placeholder)
+                .into(holder.coverImageView);
         holder.titleTextView.setText(book.getTitle());
         holder.authorTextView.setText(book.getAuthor());
         holder.itemView.setOnClickListener(v -> listener.onItemClick(book));
+
+
     }
 
     @Override
@@ -50,11 +60,13 @@ public class BookSearchAdapter extends RecyclerView.Adapter<BookSearchAdapter.Vi
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView titleTextView, authorTextView;
+        ImageView coverImageView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             titleTextView = itemView.findViewById(R.id.titleTextView);
             authorTextView = itemView.findViewById(R.id.authorTextView);
+            coverImageView = itemView.findViewById(R.id.coverImageView);
         }
     }
 }

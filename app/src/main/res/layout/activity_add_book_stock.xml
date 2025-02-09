@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.inventory.AddBookStockActivity">
+    <!-- Book Cover Image -->
+    <ImageView
+        android:id="@+id/AddBookStockActivityBookCoverImageView"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_margin="8dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/books_placeholder" />
+
+    <!-- Book Title -->
+    <TextView
+        android:id="@+id/AddBookStockActivityBookTitleTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:text="Book Title"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/AddBookStockActivityBookCoverImageView"
+        app:layout_constraintTop_toTopOf="@id/AddBookStockActivityBookCoverImageView" />
+
+    <!-- Book Author -->
+    <TextView
+        android:id="@+id/AddBookStockActivityBookAuthorTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:text="Author Name"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/AddBookStockActivityBookCoverImageView"
+        app:layout_constraintTop_toBottomOf="@id/AddBookStockActivityBookTitleTextView" />
+
+    <!-- Stock Quantity -->
+    <TextView
+        android:id="@+id/AddBookStockActivityStockLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:layout_marginTop="16dp"
+        android:text="Stock Quantity:"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/AddBookStockActivityBookCoverImageView" />
+
+    <EditText
+        android:id="@+id/AddBookStockActivityStockEditText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:hint="Enter stock quantity"
+        android:inputType="number"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/AddBookStockActivityStockLabel" />
+
+    <!-- Price -->
+    <TextView
+        android:id="@+id/AddBookStockActivityPriceLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:layout_marginTop="16dp"
+        android:text="Price (LKR):"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/AddBookStockActivityStockEditText" />
+
+    <EditText
+        android:id="@+id/AddBookStockActivityPriceEditText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:hint="Enter price"
+        android:inputType="numberDecimal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/AddBookStockActivityPriceLabel" />
+
+    <!-- Condition -->
+    <TextView
+        android:id="@+id/AddBookStockActivityConditionLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:layout_marginTop="16dp"
+        android:text="Condition:"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/AddBookStockActivityPriceEditText" />
+
+    <Spinner
+        android:id="@+id/AddBookStockActivityConditionSpinner"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/AddBookStockActivityConditionLabel" />
+
+
+
+    <!-- Submit Button -->
+    <Button
+        android:id="@+id/AddBookStockActivitySubmitInventoryButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:text="Submit Inventory"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

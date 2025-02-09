@@ -51,6 +51,9 @@ public class SearchBookActivity extends AppCompatActivity {
             @Override
             public void onItemClick(Book book) {
                 Log.d("Selected Book Is == ", book.toString());
+                Intent intent = new Intent(SearchBookActivity.this, AddBookStockActivity.class);
+                intent.putExtra("book", book); // Pass the selected book object
+                startActivity(intent);
             }
         });
         searchResultsRecyclerView.setLayoutManager(new LinearLayoutManager(this));

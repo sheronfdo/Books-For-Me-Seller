@@ -27,7 +27,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:paddingTop="8dp"
-        android:text="Search By Title:"
+        android:text="Search By:"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/addNewBookStockTitleTextView" />
@@ -38,7 +38,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:background="?attr/selectableItemBackgroundBorderless"
-        android:hint="Enter book title"
+        android:hint="Enter book title, author, ISBN"
         android:inputType="text"
         android:padding="8dp"
         app:layout_constraintEnd_toEndOf="parent"

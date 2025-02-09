@@ -38,7 +38,17 @@
     <string name="sign_in_page_email_text_hint">Email</string>
     <string name="sign_in_page_password_text_hint">Password</string>
     <string name="sign_in_page_button_text">Sign In</string>
+
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="profileFragmentText">Profile</string>
+
+    <!--  Add Stock Page  -->
+    <string-array name="conditions_array">
+        <item>New</item>
+        <item>Used - Like New</item>
+        <item>Used - Good</item>
+        <item>Used - Acceptable</item>
+    </string-array>
 </resources>
