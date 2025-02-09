@@ -1,0 +1,243 @@
+<!-- activity_add_new_book.xml -->
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.inventory.AddNewBookActivity">
+
+    <!-- Title -->
+
+    <!-- Author -->
+
+    <TextView
+        android:id="@+id/addNewBookTitleTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
+        android:paddingTop="8dp"
+        android:text="Title:"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/addNewBookTitleValueTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:hint="Enter book title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.466"
+        app:layout_constraintStart_toEndOf="@id/addNewBookTitleTextView"
+        app:layout_constraintTop_toTopOf="@id/addNewBookTitleTextView" />
+
+    <TextView
+        android:id="@+id/addNewBookAuthorTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:paddingTop="8dp"
+        android:text="Author:"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addNewBookTitleValueTextView" />
+    <EditText
+        android:id="@+id/addNewBookAuthorValueTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:hint="Enter author name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/addNewBookAuthorTextView"
+        app:layout_constraintTop_toTopOf="@+id/addNewBookAuthorTextView" />
+
+    <!-- ISBN -->
+    <TextView
+        android:id="@+id/addNewBookIsbnTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:paddingTop="8dp"
+        android:text="ISBN:"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addNewBookAuthorValueTextView" />
+    <EditText
+        android:id="@+id/addNewBookIsbnValueTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:hint="Enter ISBN"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/addNewBookIsbnTextView"
+        app:layout_constraintTop_toTopOf="@+id/addNewBookIsbnTextView" />
+
+    <!-- Category -->
+    <TextView
+        android:id="@+id/addNewBookCategoryTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:paddingTop="8dp"
+        android:text="Category:"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addNewBookIsbnValueTextView" />
+    <Spinner
+        android:id="@+id/addNewBookCategorySpinner"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/addNewBookCategoryTextView"
+        app:layout_constraintTop_toTopOf="@+id/addNewBookCategoryTextView" />
+
+    <!-- Description -->
+    <TextView
+        android:id="@+id/addNewBookDescriptionTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:paddingTop="8dp"
+        android:text="Description:"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addNewBookCategorySpinner" />
+    <EditText
+        android:id="@+id/addNewBookDescriptionValueTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:hint="Enter description"
+        android:inputType="textMultiLine"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/addNewBookDescriptionTextView"
+        app:layout_constraintTop_toTopOf="@+id/addNewBookDescriptionTextView" />
+
+    <!-- Images -->
+    <TextView
+        android:id="@+id/addNewBookImagesTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:paddingTop="8dp"
+        android:text="Cover Images:"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addNewBookDescriptionValueTextView" />
+
+    <Button
+        android:id="@+id/addNewBookImageUploadButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:text="Upload Image"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/addNewBookImagesTextView"
+        app:layout_constraintTop_toTopOf="@+id/addNewBookImagesTextView" />
+
+    <!-- Publisher -->
+    <TextView
+        android:id="@+id/addNewBookPublisherTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:paddingTop="8dp"
+        android:text="Publisher:"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addNewBookImageUploadButton" />
+    <EditText
+        android:id="@+id/addNewBookPublisherValueTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:hint="Enter publisher name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/addNewBookPublisherTextView"
+        app:layout_constraintTop_toTopOf="@+id/addNewBookPublisherTextView" />
+
+    <!-- Publication Year -->
+
+    <!-- Language -->
+    <TextView
+        android:id="@+id/addNewBookPublicationYearTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
+        android:paddingTop="8dp"
+        android:text="Publication Year:"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addNewBookPublisherValueTextView" />
+
+    <NumberPicker
+        android:id="@+id/addNewBookPublicationYearPicker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:layout_marginTop="8dp"
+        android:max="2100"
+        android:min="1900"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.534"
+        app:layout_constraintStart_toEndOf="@id/addNewBookPublicationYearTextView"
+        app:layout_constraintTop_toTopOf="@+id/addNewBookPublicationYearTextView" />
+
+    <TextView
+        android:id="@+id/addNewBookLanguageTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:paddingTop="8dp"
+        android:text="Language:"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addNewBookPublicationYearPicker" />
+    <Spinner
+        android:id="@+id/addNewBookLanguageSpinner"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/addNewBookLanguageTextView"
+        app:layout_constraintTop_toTopOf="@+id/addNewBookLanguageTextView" />
+
+    <!-- Tags -->
+    <TextView
+        android:id="@+id/addNewBookTagsTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:paddingTop="8dp"
+        android:text="Tags:"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addNewBookLanguageSpinner" />
+    <EditText
+        android:id="@+id/addNewBookTagsValueTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:hint="Enter tags (comma-separated)"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/addNewBookTagsTextView"
+        app:layout_constraintTop_toTopOf="@+id/addNewBookTagsTextView" />
+
+    <!-- Save Button -->
+    <Button
+        android:id="@+id/addNewBookSaveButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:text="Save Book"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addNewBookTagsValueTextView" />
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -10,7 +10,7 @@ android {
 
     defaultConfig {
         applicationId = "com.jamith.booksformeseller"
-        minSdk = 30
+        minSdk = 34
         targetSdk = 35
         versionCode = 1
         versionName = "1.0"
@@ -54,6 +54,9 @@ dependencies {
     implementation("org.modelmapper:modelmapper:3.2.2")
     implementation("com.google.firebase:firebase-storage:21.0.1")
     implementation("com.google.firebase:firebase-crashlytics")
+    implementation("com.google.firebase:firebase-firestore:25.1.1")
+    implementation("com.github.bumptech.glide:glide:4.16.0")
+    implementation("com.google.android.gms:play-services-auth:21.3.0")
 
 
 }
