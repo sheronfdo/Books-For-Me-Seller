@@ -11,8 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.jamith.booksformeseller.R;
-import com.jamith.booksformeseller.activity.inventory.AddNewBookActivity;
-import com.jamith.booksformeseller.activity.inventory.AddNewBookStockActivity;
+import com.jamith.booksformeseller.activity.inventory.SearchBookActivity;
 
 
 public class InventoryFragment extends Fragment {
@@ -32,7 +31,7 @@ public class InventoryFragment extends Fragment {
         addNewBookButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), AddNewBookStockActivity.class);
+                Intent intent = new Intent(getActivity(), SearchBookActivity.class);
                 startActivity(intent);
             }
         });

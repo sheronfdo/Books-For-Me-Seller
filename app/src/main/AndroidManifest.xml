@@ -24,7 +24,7 @@
             android:name=".activity.inventory.AddNewBookActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.inventory.AddNewBookStockActivity"
+            android:name=".activity.inventory.SearchBookActivity"
             android:exported="false" />
         <activity
             android:name=".activity.ProfileInfoActivity"

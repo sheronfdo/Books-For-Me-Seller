@@ -34,16 +34,12 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.jamith.booksformeseller.R;
-import com.jamith.booksformeseller.activity.MainActivity;
-import com.jamith.booksformeseller.activity.signup.SignUpImageActivity;
 import com.jamith.booksformeseller.dto.requestDTO.AddNewBookDTO;
 import com.jamith.booksformeseller.dto.responseDTO.BookAddResponseDTO;
-import com.jamith.booksformeseller.dto.responseDTO.SellerSignUpResponseDTO;
 import com.jamith.booksformeseller.model.Category;
 import com.jamith.booksformeseller.model.Language;
 import com.jamith.booksformeseller.service.BookService;
 import com.jamith.booksformeseller.service.FirebaseStorageService;
-import com.jamith.booksformeseller.service.SignUpService;
 import com.jamith.booksformeseller.util.StorageFolders;
 
 import java.util.ArrayList;
@@ -280,7 +276,7 @@ public class AddNewBookActivity extends AppCompatActivity {
                 runOnUiThread(() -> {
 //                    progressBar.setVisibility(View.GONE);
                     Toast.makeText(AddNewBookActivity.this, "Book Added successfully!", Toast.LENGTH_LONG).show();
-                    Intent intent = new Intent(AddNewBookActivity.this, AddNewBookStockActivity.class);
+                    Intent intent = new Intent(AddNewBookActivity.this, SearchBookActivity.class);
                     startActivity(intent);
                     finish();
                 });
