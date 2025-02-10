@@ -11,52 +11,52 @@
         android:id="@+id/titleTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:paddingBottom="16dp"
         android:text="Inventory Management"
         android:textSize="24sp"
         android:textStyle="bold"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:paddingBottom="16dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- Add New Book Button -->
-    <Button
-        android:id="@+id/addNewBookButton"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:background="@color/primaryColor"
-        android:padding="12dp"
-        android:text="Add New Book"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/titleTextView" />
+
 
     <!-- Search Bar -->
     <EditText
         android:id="@+id/searchEditText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:layout_marginTop="16dp"
         android:hint="Search books..."
         android:inputType="text"
         android:padding="8dp"
-        app:layout_constraintTop_toBottomOf="@id/addNewBookButton"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="16dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/titleTextView" />
 
-    <!-- RecyclerView for Book Listings -->
+    <Button
+        android:id="@+id/addNewBookButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:background="@color/primaryColor"
+        android:padding="12dp"
+        android:text="Add New Book"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/searchEditText" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/bookListRecyclerView"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="16dp"
+        android:layout_margin="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/searchEditText" />
+        app:layout_constraintTop_toBottomOf="@+id/addNewBookButton" />
 
-    <!-- Notifications Button -->
 
-    <!-- Reports Button -->
 </androidx.constraintlayout.widget.ConstraintLayout>
