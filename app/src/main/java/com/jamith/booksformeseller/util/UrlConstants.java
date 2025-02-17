@@ -8,4 +8,5 @@ public class UrlConstants {
     public static final String SELLER_SET_IMAGE_URL = BASE_URL + "/seller/image";
     public static final String ADD_NEW_BOOK_URL = BASE_URL + "/book/addNewBook";
     public static final String ADD_NEW_BOOK_STOCK_URL = BASE_URL + "/book/addNewBookStock";
+    public static final String ORDER_STATUS_UPDATE_URL = BASE_URL + "/order/orderStatus";
 }

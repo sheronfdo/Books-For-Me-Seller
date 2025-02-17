@@ -64,27 +64,7 @@ public class HomeActivity extends AppCompatActivity {
 
             return true;
         });
-        FirebaseMessaging.getInstance().getToken().addOnCompleteListener(new OnCompleteListener<String>() {
-            @Override
-            public void onComplete(@NonNull Task<String> task) {
-                if (!task.isSuccessful()) {
-                    Log.d("Fetching FCM registration token failed", task.getException().toString());
-                    return;
-                }
-                String token = task.getResult();
-                Log.d("Token", token);
-                tokenUpdate(token);
-            }
-        });
 
-    }
-
-    private void tokenUpdate(String token) {
-        firebaseFirestore.collection("sellers").document(firebaseAuth.getCurrentUser().getUid()).update("fcmToken", token).addOnSuccessListener(aVoid -> {
-            Log.d("Firestore", "FCM token updated successfully.");
-        }).addOnFailureListener(e -> {
-            Log.e("Firestore", "Error updating FCM token", e);
-        });
     }
 
     private void loadFragment(Fragment fragment) {

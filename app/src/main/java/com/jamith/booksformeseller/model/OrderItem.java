@@ -1,5 +1,7 @@
 package com.jamith.booksformeseller.model;
 
+import java.io.Serializable;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,7 +11,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class OrderItem {
+public class OrderItem implements Serializable {
     private String orderItemId;
     private String bookId;
     private String bookStockId;
@@ -20,4 +22,5 @@ public class OrderItem {
     private int quantity;
     private String sellerId;
     private String title;
+    private String status;
 }

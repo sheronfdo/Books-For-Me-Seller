@@ -51,4 +51,14 @@
         <item>Used - Good</item>
         <item>Used - Acceptable</item>
     </string-array>
+
+    <string-array name="order_status_options">
+        <item>ORDER_APPROVED</item>
+        <item>ORDER_REJECTED</item>
+        <item>PROCESSING</item>
+        <item>SHIPPED</item>
+        <item>DELIVERED</item>
+        <item>ORDER_COMPLETED</item>
+    </string-array>
+
 </resources>
