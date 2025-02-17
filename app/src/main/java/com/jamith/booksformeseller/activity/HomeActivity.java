@@ -2,16 +2,23 @@ package com.jamith.booksformeseller.activity;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.FrameLayout;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.jamith.booksformeseller.R;
 import com.jamith.booksformeseller.activity.fragments.HomeFragment;
 import com.jamith.booksformeseller.activity.fragments.InventoryFragment;
@@ -21,6 +28,8 @@ import com.jamith.booksformeseller.activity.fragments.ProfileFragment;
 public class HomeActivity extends AppCompatActivity {
     private FrameLayout fragmentContainer;
     private BottomNavigationView bottomNavigationView;
+    private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+    private FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
 
     @SuppressLint("NonConstantResourceId")
     @Override
@@ -54,6 +63,27 @@ public class HomeActivity extends AppCompatActivity {
             }
 
             return true;
+        });
+        FirebaseMessaging.getInstance().getToken().addOnCompleteListener(new OnCompleteListener<String>() {
+            @Override
+            public void onComplete(@NonNull Task<String> task) {
+                if (!task.isSuccessful()) {
+                    Log.d("Fetching FCM registration token failed", task.getException().toString());
+                    return;
+                }
+                String token = task.getResult();
+                Log.d("Token", token);
+                tokenUpdate(token);
+            }
+        });
+
+    }
+
+    private void tokenUpdate(String token) {
+        firebaseFirestore.collection("sellers").document(firebaseAuth.getCurrentUser().getUid()).update("fcmToken", token).addOnSuccessListener(aVoid -> {
+            Log.d("Firestore", "FCM token updated successfully.");
+        }).addOnFailureListener(e -> {
+            Log.e("Firestore", "Error updating FCM token", e);
         });
     }
 
