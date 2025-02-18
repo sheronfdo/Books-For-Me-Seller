@@ -19,18 +19,13 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.bumptech.glide.Glide;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.jamith.booksformeseller.R;
-import com.jamith.booksformeseller.activity.signup.SignUpActivity;
 import com.jamith.booksformeseller.dto.requestDTO.OrderStatusDTO;
 import com.jamith.booksformeseller.dto.responseDTO.OrderResponseDTO;
 import com.jamith.booksformeseller.model.OrderItem;
 import com.jamith.booksformeseller.service.OrderService;
 import com.jamith.booksformeseller.util.OrderStatus;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class OrderDetailsActivity extends AppCompatActivity {
     private TextView tvOrderItemName, tvOrderItemQuantity, tvOrderItemPrice, tvOrderItemTotalPrice, tvOrderStatus;
@@ -111,7 +106,6 @@ public class OrderDetailsActivity extends AppCompatActivity {
                     Toast.makeText(this, "Failed to load order details.", Toast.LENGTH_SHORT).show());
 
 
-
             tvOrderItemName.setText(orderItem.getTitle());
             tvOrderItemQuantity.setText(Integer.toString(orderItem.getQuantity()));
             tvOrderItemPrice.setText(Double.toString(orderItem.getPrice()));
@@ -132,7 +126,7 @@ public class OrderDetailsActivity extends AppCompatActivity {
         String newStatus = spinnerOrderStatus.getSelectedItem().toString();
 
         OrderStatusDTO orderStatusDTO = new OrderStatusDTO();
-        orderStatusDTO.setPaymentStatus(OrderStatus.valueOf(newStatus));
+        orderStatusDTO.setOrderStatus(OrderStatus.valueOf(newStatus));
         orderStatusDTO.setOrderItemId(orderItem.getOrderItemId());
         orderStatusDTO.setOrderId(orderItem.getOrderId());
         orderStatusDTO.setSellerId(orderItem.getSellerId());
@@ -140,18 +134,24 @@ public class OrderDetailsActivity extends AppCompatActivity {
         orderService.statusUpdate(orderStatusDTO, new OrderService.OrderServiceCallback() {
             @Override
             public void onSuccess(OrderResponseDTO response) {
-                Toast.makeText(OrderDetailsActivity.this, "Status Updated Successful.", Toast.LENGTH_LONG).show();
-                finish();
+                runOnUiThread(() -> {
+                    Toast.makeText(OrderDetailsActivity.this, "Status Updated Successful.", Toast.LENGTH_LONG).show();
+                    finish();
+                });
             }
 
             @Override
             public void onError(String errorMessage) {
-                Toast.makeText(OrderDetailsActivity.this, "Error: " + errorMessage, Toast.LENGTH_LONG).show();
+                runOnUiThread(() -> {
+                    Toast.makeText(OrderDetailsActivity.this, "Error: " + errorMessage, Toast.LENGTH_LONG).show();
+                });
             }
 
             @Override
             public void onFailure(String failureMessage) {
-                Toast.makeText(OrderDetailsActivity.this, "Error: " + failureMessage, Toast.LENGTH_LONG).show();
+                runOnUiThread(() -> {
+                    Toast.makeText(OrderDetailsActivity.this, "Error: " + failureMessage, Toast.LENGTH_LONG).show();
+                });
             }
         });
 

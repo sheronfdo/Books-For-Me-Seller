@@ -15,5 +15,5 @@ public class OrderStatusDTO {
     private String orderId;
     private String orderItemId;
     private String sellerId;
-    private OrderStatus paymentStatus;
+    private OrderStatus orderStatus;
 }
