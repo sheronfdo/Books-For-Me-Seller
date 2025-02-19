@@ -49,15 +49,26 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etCompanyName" />
 
-    <ImageButton
+    <Button
         android:id="@+id/imageButton"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/sign_up_business_page_file_picker_button_text"
+        android:layout_margin="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etBusinessRegistrationNumber" />
+
+    <ImageView
+        android:id="@+id/brRegImageView"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_margin="8dp"
         app:layout_constraintBottom_toTopOf="@+id/btnSignUpBrDetails"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etBusinessRegistrationNumber" />
+        app:layout_constraintTop_toBottomOf="@+id/imageButton"
+        tools:srcCompat="@tools:sample/avatars" />
 
     <Button
         android:id="@+id/btnSignUpBrDetails"
@@ -70,6 +81,28 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Selected document type is not visible!."
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/brRegImageView"
+        app:layout_constraintEnd_toEndOf="@+id/brRegImageView"
+        app:layout_constraintStart_toStartOf="@+id/brRegImageView"
+        app:layout_constraintTop_toTopOf="@+id/brRegImageView" />
+
+    <ProgressBar
+        android:id="@+id/signUpBrProgressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

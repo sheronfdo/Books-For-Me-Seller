@@ -8,6 +8,7 @@
     tools:context=".activity.signup.SignUpActivity">
 
     <!-- Title -->
+
     <TextView
         android:id="@+id/sign_up_page_title"
         android:layout_width="match_parent"
@@ -58,16 +59,31 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/etFullName" />
 
+    <com.hbb20.CountryCodePicker
+        android:id="@+id/countryCodePicker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        app:ccp_defaultLanguage="ENGLISH"
+        app:ccp_defaultNameCode="LK"
+        app:ccp_defaultPhoneCode="94"
+        app:ccp_showFlag="true"
+        app:ccp_showNameCode="false"
+        app:ccp_showPhoneCode="true"
+        app:layout_constraintBottom_toBottomOf="@+id/etPhoneNumber"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/etPhoneNumber" />
+
     <EditText
         android:id="@+id/etPhoneNumber"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:layout_marginTop="112dp"
         android:hint="@string/sign_up_page_phone_number_text_hint"
         android:inputType="phone"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/countryCodePicker"
         app:layout_constraintTop_toBottomOf="@id/etEmail" />
 
     <!-- Password -->
@@ -107,13 +123,14 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <ProgressBar
-        android:id="@+id/progressBar"
+        android:id="@+id/signUpProgressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="gone"
         android:layout_gravity="center"
-        app:layout_constraintTop_toBottomOf="parent"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

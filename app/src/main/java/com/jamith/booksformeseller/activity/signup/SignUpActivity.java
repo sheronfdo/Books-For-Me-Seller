@@ -16,6 +16,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.hbb20.CountryCodePicker;
 import com.jamith.booksformeseller.R;
 import com.jamith.booksformeseller.dto.requestDTO.SellerSignUpRequest;
 import com.jamith.booksformeseller.dto.responseDTO.SellerSignUpResponseDTO;
@@ -29,6 +30,7 @@ public class SignUpActivity extends AppCompatActivity {
     private Spinner spSellerType;
     private Button btnSignUp;
     private ProgressBar progressBar;
+    private CountryCodePicker countryCodePicker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,8 +49,10 @@ public class SignUpActivity extends AppCompatActivity {
         etPhoneNumber = findViewById(R.id.etPhoneNumber);
         spSellerType = findViewById(R.id.spinnerSellerType);
         btnSignUp = findViewById(R.id.btnSignUp);
-        progressBar = findViewById(R.id.progressBar);
+        progressBar = findViewById(R.id.signUpProgressBar);
         etConfirmPassword = findViewById(R.id.etConfirmPassword);
+        countryCodePicker = findViewById(R.id.countryCodePicker);
+        countryCodePicker.registerCarrierNumberEditText(etPhoneNumber);
 
         btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,10 +63,11 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private void gatherSellerDetails() {
+        progressBar.setVisibility(View.VISIBLE);
         String fullNameOrRepresentative = etFullNameOrRepresentative.getText().toString().trim();
         String email = etEmail.getText().toString().trim();
         String password = etPassword.getText().toString().trim();
-        String phoneNumber = etPhoneNumber.getText().toString().trim();
+        String phoneNumber = "+" + countryCodePicker.getFullNumber().trim();
         String confirmPassword = etConfirmPassword.getText().toString().trim();
         String sellerType = spSellerType.getSelectedItem().toString();
 
@@ -100,7 +105,6 @@ public class SignUpActivity extends AppCompatActivity {
                     });
                 }
             });
-            Toast.makeText(this, "Seller details collected successfully: " + sellerType, Toast.LENGTH_LONG).show();
         }
     }
 

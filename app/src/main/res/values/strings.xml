@@ -28,10 +28,12 @@
     <string name="sign_up_page_company_name_text_hint">Company Name</string>
     <string name="sign_up_page_br_reg_number_text_hint">Business Registration Number</string>
     <string name="sign_up_business_page_button_text">Add Business Details</string>
+    <string name="sign_up_business_page_file_picker_button_text">Upload BR Documents</string>
     <!--  sign up image upload page  -->
     <string name="sign_up_image_page_text">Seller Image</string>
     <string name="sign_up_image_button_text">Select Seller Image</string>
     <string name="sign_up_image_button">Add Seller Image</string>
+    <string name="sign_up_image_picker_button">Select Profile Image</string>
 
     <!--  Sign In Page  -->
     <string name="sign_in_page_text">Seller Sign Up</string>
