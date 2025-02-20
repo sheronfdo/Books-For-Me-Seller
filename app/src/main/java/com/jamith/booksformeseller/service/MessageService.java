@@ -28,17 +28,11 @@ public class MessageService extends FirebaseMessagingService {
         Log.d("notification", message.getNotification().getTitle());
         NotificationManager notificationManager = getSystemService(NotificationManager.class);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel notificationChannel =
-                    new NotificationChannel("C1", "Channel1",
-                            NotificationManager.IMPORTANCE_DEFAULT);
+            NotificationChannel notificationChannel = new NotificationChannel("C1", "Channel1", NotificationManager.IMPORTANCE_DEFAULT);
 
             notificationManager.createNotificationChannel(notificationChannel);
         }
-        Notification notification = new NotificationCompat.Builder(getApplicationContext(), "C1")
-                .setContentTitle(message.getNotification().getTitle())
-                .setContentText(message.getNotification().getBody())
-                .setSmallIcon(R.drawable.user)
-                .build();
+        Notification notification = new NotificationCompat.Builder(getApplicationContext(), "C1").setContentTitle(message.getNotification().getTitle()).setContentText(message.getNotification().getBody()).setSmallIcon(R.drawable.user).build();
         notificationManager.notify(1, notification);
     }
 
@@ -56,20 +50,19 @@ public class MessageService extends FirebaseMessagingService {
                 }
                 String refreshedToken = task.getResult();
                 Log.d("Refreshed Token", refreshedToken);
-
-                // Update Firestore with the refreshed token
-                tokenUpdate(refreshedToken);
+                if (firebaseAuth.getCurrentUser() != null) {
+                    tokenUpdate(refreshedToken);
+                }
             }
         });
     }
 
-    private void tokenUpdate(String token) {
-        firebaseFirestore.collection("sellers")
-                .document(firebaseAuth.getCurrentUser().getUid())
-                .update("fcmToken", token).addOnSuccessListener(aVoid -> {
-                    Log.d("Firestore", "FCM token updated successfully.");
-                }).addOnFailureListener(e -> {
-                    Log.e("Firestore", "Error updating FCM token", e);
-                });
+    public void tokenUpdate(String token) {
+        firebaseFirestore.collection("sellers").document(firebaseAuth.getCurrentUser()
+                .getUid()).update("fcmToken", token).addOnSuccessListener(aVoid -> {
+            Log.d("Firestore", "FCM token updated successfully.");
+        }).addOnFailureListener(e -> {
+            Log.e("Firestore", "Error updating FCM token", e);
+        });
     }
 }

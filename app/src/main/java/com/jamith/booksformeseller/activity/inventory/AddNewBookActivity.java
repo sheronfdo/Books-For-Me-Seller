@@ -34,6 +34,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.jamith.booksformeseller.R;
+import com.jamith.booksformeseller.database.DataRepository;
 import com.jamith.booksformeseller.dto.requestDTO.AddNewBookDTO;
 import com.jamith.booksformeseller.dto.responseDTO.BookAddResponseDTO;
 import com.jamith.booksformeseller.model.Category;
@@ -55,6 +56,7 @@ public class AddNewBookActivity extends AppCompatActivity {
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private List<Category> bookCategories = new ArrayList<>();
     private List<Language> bookLanguages = new ArrayList<>();
+    private DataRepository dataRepo;
     private String selectedCategoryId;
     private String selectedLanguageId;
     private static final int PICK_IMAGE_REQUEST = 1;
@@ -78,6 +80,9 @@ public class AddNewBookActivity extends AppCompatActivity {
         } else {
             requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CODE);
         }
+
+        dataRepo = new DataRepository(this);
+
         numberPicker = findViewById(R.id.addNewBookPublicationYearPicker);
         numberPicker.setMaxValue(2100);
         numberPicker.setMinValue(1900);
@@ -166,24 +171,26 @@ public class AddNewBookActivity extends AppCompatActivity {
     }
 
     private void fetchLanguages() {
-        CollectionReference categoriesRef = db.collection("languages");
-        categoriesRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    for (QueryDocumentSnapshot document : task.getResult()) {
-                        String id = document.getId();
-                        String language = document.getString("name");  // Assuming "name" is the field for category
-                        if (language != null) {
-                            bookLanguages.add(new Language(id, language));
-                        }
-                    }
-                    populateLanguageSpinner();
-                } else {
-                    Toast.makeText(AddNewBookActivity.this, "Failed to fetch categories", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+      bookLanguages = dataRepo.getLanguages();
+      populateLanguageSpinner();
+//        CollectionReference categoriesRef = db.collection("languages");
+//        categoriesRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//            @Override
+//            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                if (task.isSuccessful()) {
+//                    for (QueryDocumentSnapshot document : task.getResult()) {
+//                        String id = document.getId();
+//                        String language = document.getString("name");  // Assuming "name" is the field for category
+//                        if (language != null) {
+//                            bookLanguages.add(new Language(id, language));
+//                        }
+//                    }
+//                    populateLanguageSpinner();
+//                } else {
+//                    Toast.makeText(AddNewBookActivity.this, "Failed to fetch categories", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//        });
     }
 
     private void populateLanguageSpinner() {
@@ -193,24 +200,27 @@ public class AddNewBookActivity extends AppCompatActivity {
     }
 
     private void fetchCategories() {
-        CollectionReference categoriesRef = db.collection("categories");
-        categoriesRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    for (QueryDocumentSnapshot document : task.getResult()) {
-                        String id = document.getId();
-                        String category = document.getString("name");  // Assuming "name" is the field for category
-                        if (category != null) {
-                            bookCategories.add(new Category(id, category));
-                        }
-                    }
-                    populateCategorySpinner();
-                } else {
-                    Toast.makeText(AddNewBookActivity.this, "Failed to fetch categories", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+        bookCategories = dataRepo.getCategories();
+        populateCategorySpinner();
+
+        //        CollectionReference categoriesRef = db.collection("categories");
+//        categoriesRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//            @Override
+//            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                if (task.isSuccessful()) {
+//                    for (QueryDocumentSnapshot document : task.getResult()) {
+//                        String id = document.getId();
+//                        String category = document.getString("name");  // Assuming "name" is the field for category
+//                        if (category != null) {
+//                            bookCategories.add(new Category(id, category));
+//                        }
+//                    }
+//                    populateCategorySpinner();
+//                } else {
+//                    Toast.makeText(AddNewBookActivity.this, "Failed to fetch categories", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//        });
     }
 
     private void populateCategorySpinner() {
