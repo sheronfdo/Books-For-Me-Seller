@@ -13,14 +13,6 @@ public class FirebaseStorageService {
 
     private static final String BASE_STORAGE_PATH = "uploads/";
 
-    /**
-     * Uploads a file to Firebase Storage.
-     *
-     * @param fileUri    The URI of the file to upload.
-     * @param folderName The folder name in Firebase Storage where the file will be stored.
-     * @param onSuccess  Callback for successful upload (returns download URL).
-     * @param onFailure  Callback for failed upload (returns error message).
-     */
     public void uploadFile(Uri fileUri, String folderName,
                            OnSuccessListener onSuccess,
                            OnFailureListener onFailure) {

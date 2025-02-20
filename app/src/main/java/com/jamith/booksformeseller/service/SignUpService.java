@@ -6,6 +6,7 @@ import com.google.gson.Gson;
 import com.jamith.booksformeseller.dto.requestDTO.SellerSignUpAddressRequest;
 import com.jamith.booksformeseller.dto.requestDTO.SellerSignUpBrRequest;
 import com.jamith.booksformeseller.dto.requestDTO.SellerSignUpImageRequest;
+import com.jamith.booksformeseller.dto.requestDTO.SellerUpdateDTO;
 import com.jamith.booksformeseller.dto.responseDTO.ErrorResponse;
 import com.jamith.booksformeseller.dto.responseDTO.SellerSignUpResponseDTO;
 import com.jamith.booksformeseller.dto.requestDTO.SellerSignUpRequest;
@@ -199,6 +200,49 @@ public class SignUpService {
             }
         });
     }
+
+    public void updateSellerProfile(SellerUpdateDTO sellerUpdateDTO, SignUpCallback callback){
+        String jsonData = gson.toJson(sellerUpdateDTO);
+        RequestBody body = RequestBody.create(jsonData, JSONMediaType);
+        Request request = new Request.Builder()
+                .url(UrlConstants.SELLER_UPDATE_URL)
+                .post(body)
+                .build();
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.e("Network Error", "Failed to connect to the server: " + e.getMessage());
+                callback.onFailure("No internet connection or server unreachable.");
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    try {
+                        String responseBody = response.body().string();
+                        Log.d("Response Success", responseBody);
+                        SuccessResponse successResponse = gson.fromJson(responseBody, SuccessResponse.class);
+                        SellerSignUpResponseDTO signUpResponse = modelMapper.map(successResponse.getData(), SellerSignUpResponseDTO.class);
+                        callback.onSuccess(signUpResponse);
+                    } catch (Exception e) {
+                        Log.e("Parsing Error", "Failed to parse the response: " + e.getMessage());
+                        callback.onError("Failed to process the server response.");
+                    }
+                } else {
+                    try {
+                        String errorBody = response.body().string();
+                        Log.e("Response Error", errorBody);
+                        ErrorResponse errorResponse = gson.fromJson(errorBody, ErrorResponse.class);
+                        callback.onError(errorResponse.getMessage());
+                    } catch (Exception e) {
+                        Log.e("Error Parsing", "Failed to parse the error response: " + e.getMessage());
+                        callback.onError("An unexpected error occurred.");
+                    }
+                }
+            }
+        });
+    }
+
 
     public interface SignUpCallback {
         void onSuccess(SellerSignUpResponseDTO response);

@@ -5,10 +5,6 @@
 
     <!--  Sign Up Page  -->
     <string name="sign_up_page_text">Seller Sign Up</string>
-    <string-array name="seller_types">
-        <item>Individual</item>
-        <item>Company</item>
-    </string-array>
     <string name="sign_up_page_name_text_hint">Full Name or Representative</string>
     <string name="sign_up_page_email_text_hint">Email</string>
     <string name="sign_up_page_password_text_hint">Password</string>
@@ -63,4 +59,7 @@
         <item>ORDER_COMPLETED</item>
     </string-array>
 
+
+    <string name="open">Open Drawer</string>
+    <string name="close">Close Drawer</string>
 </resources>

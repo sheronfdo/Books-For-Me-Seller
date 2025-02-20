@@ -25,9 +25,6 @@ import com.jamith.booksformeseller.service.SignUpService;
 public class SignUpActivity extends AppCompatActivity {
 
     private EditText etFullNameOrRepresentative, etEmail, etPassword, etPhoneNumber, etConfirmPassword;
-    private EditText etStreet, etCity, etState, etPostalCode, etCountry;
-    private EditText etCompanyName, etBusinessRegistrationNumber;
-    private Spinner spSellerType;
     private Button btnSignUp;
     private ProgressBar progressBar;
     private CountryCodePicker countryCodePicker;
@@ -47,7 +44,6 @@ public class SignUpActivity extends AppCompatActivity {
         etEmail = findViewById(R.id.etEmail);
         etPassword = findViewById(R.id.etPassword);
         etPhoneNumber = findViewById(R.id.etPhoneNumber);
-        spSellerType = findViewById(R.id.spinnerSellerType);
         btnSignUp = findViewById(R.id.btnSignUp);
         progressBar = findViewById(R.id.signUpProgressBar);
         etConfirmPassword = findViewById(R.id.etConfirmPassword);
@@ -69,7 +65,7 @@ public class SignUpActivity extends AppCompatActivity {
         String password = etPassword.getText().toString().trim();
         String phoneNumber = "+" + countryCodePicker.getFullNumber().trim();
         String confirmPassword = etConfirmPassword.getText().toString().trim();
-        String sellerType = spSellerType.getSelectedItem().toString();
+        String sellerType = "Company";
 
         if (validateInputs(fullNameOrRepresentative, email, password, confirmPassword, phoneNumber)) {
             SellerSignUpRequest sellerSignUpRequest = new SellerSignUpRequest(sellerType, fullNameOrRepresentative,

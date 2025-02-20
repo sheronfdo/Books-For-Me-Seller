@@ -22,16 +22,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- Seller Type Dropdown -->
-    <Spinner
-        android:id="@+id/spinnerSellerType"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:entries="@array/seller_types"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/sign_up_page_title" />
+
 
     <!-- Full Name / Representative -->
     <EditText
@@ -44,7 +35,7 @@
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/spinnerSellerType" />
+        app:layout_constraintTop_toBottomOf="@id/sign_up_page_title" />
 
     <!-- Email -->
     <EditText
