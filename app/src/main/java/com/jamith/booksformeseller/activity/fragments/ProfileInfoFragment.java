@@ -271,11 +271,7 @@ public class ProfileInfoFragment extends Fragment {
                 requireActivity().runOnUiThread(() -> {
                     progressBar.setVisibility(View.GONE);
                     Toast.makeText(getContext(), "Seller Updated Successfully!", Toast.LENGTH_LONG).show();
-//                    Intent intent = new Intent(SignUpImageActivity.this, MainActivity.class);
-//                    intent.putExtra("userId", response.getId());
-//                    startActivity(intent);
-//                    finish();
-                    homeActivity.loadFragment(new HomeFragment());
+                    homeActivity.setFragmentHome();
                 });
             }
 

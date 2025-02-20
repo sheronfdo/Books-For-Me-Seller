@@ -138,4 +138,9 @@ public class HomeActivity extends AppCompatActivity {
                 .replace(R.id.fragmentContainer, fragment)
                 .commit();
     }
+
+    public void setFragmentHome(){
+        bottomNavigationView.setSelectedItemId(R.id.nav_home);
+    }
+
 }
