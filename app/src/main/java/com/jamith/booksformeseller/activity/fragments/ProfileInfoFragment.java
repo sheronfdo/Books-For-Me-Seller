@@ -34,9 +34,7 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.jamith.booksformeseller.R;
-import com.jamith.booksformeseller.activity.MainActivity;
-import com.jamith.booksformeseller.activity.signup.SignUpImageActivity;
-import com.jamith.booksformeseller.dto.requestDTO.SellerSignUpImageRequest;
+import com.jamith.booksformeseller.activity.HomeActivity;
 import com.jamith.booksformeseller.dto.requestDTO.SellerUpdateDTO;
 import com.jamith.booksformeseller.dto.responseDTO.SellerSignUpResponseDTO;
 import com.jamith.booksformeseller.model.Profile;
@@ -53,13 +51,15 @@ public class ProfileInfoFragment extends Fragment {
             etStreet, etCity, etState, etCountry, etPostalCode, etEmail;
     private Button btnSaveChanges, btnChangeImage;
     private Uri selectedImageUri;
-    private   int PERMISSION_REQUEST_CODE = 100;
-    private   int PICK_IMAGE_REQUEST = 101;
-    private   int CAMERA_REQUEST_CODE = 102;
+    private int PERMISSION_REQUEST_CODE = 100;
+    private int PICK_IMAGE_REQUEST = 101;
+    private int CAMERA_REQUEST_CODE = 102;
     private Uri selectedFileUri;
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     private FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
     private ProgressBar progressBar;
+    private HomeActivity homeActivity;
+    private String imageUrl;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -90,6 +90,7 @@ public class ProfileInfoFragment extends Fragment {
         progressBar = view.findViewById(R.id.prfoileInfoProgressBar);
         btnChangeImage.setOnClickListener(v -> showFilePickerDialog());
         btnSaveChanges.setOnClickListener(v -> saveProfileChanges());
+        homeActivity = (HomeActivity) requireActivity();
     }
 
     private void checkPermissions() {
@@ -153,10 +154,10 @@ public class ProfileInfoFragment extends Fragment {
 
         if (resultCode == Activity.RESULT_OK && data != null) {
             if (requestCode == PICK_IMAGE_REQUEST) {
-                // Gallery Image Selected
                 selectedFileUri = data.getData();
-                profileImage.setImageURI(selectedFileUri);
                 Toast.makeText(getContext(), "Image Selected from Gallery", Toast.LENGTH_SHORT).show();
+                profileImage.setImageURI(selectedFileUri);
+
             } else if (requestCode == CAMERA_REQUEST_CODE) {
                 // Camera Image Captured
                 Bitmap imageBitmap = (Bitmap) data.getExtras().get("data");
@@ -188,7 +189,7 @@ public class ProfileInfoFragment extends Fragment {
                                 .load(profile.getImageUrl())
                                 .placeholder(R.drawable.profile)
                                 .into(profileImage);
-
+                        imageUrl = profile.getImageUrl();
                         Log.d("address", profile.getAddress().toString());
                         Log.d("businessDetails", profile.getBusinessDetails().toString());
 
@@ -210,8 +211,6 @@ public class ProfileInfoFragment extends Fragment {
     }
 
 
-
-
     private void saveProfileChanges() {
         progressBar.setVisibility(View.VISIBLE);
         // Collect updated data
@@ -225,30 +224,29 @@ public class ProfileInfoFragment extends Fragment {
         String country = etCountry.getText().toString();
         String postalCode = etPostalCode.getText().toString();
 
+        SellerUpdateDTO sellerUpdateDTO = new SellerUpdateDTO();
+        sellerUpdateDTO.setId(firebaseAuth.getCurrentUser().getUid());
+        sellerUpdateDTO.setFullName(fullName);
+        sellerUpdateDTO.setPhoneNumber(phoneNumber);
+        sellerUpdateDTO.setCompanyName(companyName);
+        sellerUpdateDTO.setRegistrationNumber(registrationNumber);
+        sellerUpdateDTO.setStreet(street);
+        sellerUpdateDTO.setCity(city);
+        sellerUpdateDTO.setState(state);
+        sellerUpdateDTO.setCountry(country);
+        sellerUpdateDTO.setPostalCode(postalCode);
+
         if (selectedFileUri == null) {
-            Toast.makeText(getContext(), "No file selected", Toast.LENGTH_SHORT).show();
+            sellerUpdateDTO.setImageUrl(imageUrl);
+            saveData(sellerUpdateDTO);
         } else {
             new FirebaseStorageService().uploadFile(selectedFileUri, StorageFolders.IMAGES, new OnSuccessListener() {
                 @Override
                 public void onSuccess(Object o) {
-                    requireActivity(). runOnUiThread(() -> {
-                       String sellerImageDownloadUrl = o.toString();
+                    requireActivity().runOnUiThread(() -> {
+                        String sellerImageDownloadUrl = o.toString();
                         Log.d("image upload success", o.toString());
-                        SellerUpdateDTO sellerUpdateDTO = new SellerUpdateDTO();
-                        sellerUpdateDTO.setId(firebaseAuth.getCurrentUser().getUid());
-                        sellerUpdateDTO.setFullName(fullName);
-                        sellerUpdateDTO.setPhoneNumber(phoneNumber);
-                        sellerUpdateDTO.setCompanyName(companyName);
-                        sellerUpdateDTO.setRegistrationNumber(registrationNumber);
-                        sellerUpdateDTO.setStreet(street);
-                        sellerUpdateDTO.setCity(city);
-                        sellerUpdateDTO.setState(state);
-                        sellerUpdateDTO.setCountry(country);
-                        sellerUpdateDTO.setPostalCode(postalCode);
                         sellerUpdateDTO.setImageUrl(sellerImageDownloadUrl);
-
-
-
                         saveData(sellerUpdateDTO);
                     });
                 }
@@ -277,6 +275,7 @@ public class ProfileInfoFragment extends Fragment {
 //                    intent.putExtra("userId", response.getId());
 //                    startActivity(intent);
 //                    finish();
+                    homeActivity.loadFragment(new HomeFragment());
                 });
             }
 
