@@ -2,6 +2,10 @@ package com.jamith.booksformeseller.activity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -23,6 +27,8 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.CustomTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -40,6 +46,10 @@ import com.jamith.booksformeseller.activity.fragments.InventoryFragment;
 import com.jamith.booksformeseller.activity.fragments.OrderFragment;
 import com.jamith.booksformeseller.activity.fragments.ProfileFragment;
 import com.jamith.booksformeseller.activity.fragments.ProfileInfoFragment;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 public class HomeActivity extends AppCompatActivity {
     private FrameLayout fragmentContainer;
@@ -79,7 +89,6 @@ public class HomeActivity extends AppCompatActivity {
             loadFragment(new HomeFragment());
         }
 
-        // Set up bottom navigation listener
         bottomNavigationView.setOnItemSelectedListener(item -> {
             int itemId = item.getItemId();
             if (itemId == R.id.nav_home) {
@@ -110,6 +119,7 @@ public class HomeActivity extends AppCompatActivity {
         });
     }
 
+    private final long IMAGE_EXPIRY_DURATION = 24 * 60 * 60 * 1000;
     private void loadProfileData() {
         if (firebaseAuth.getCurrentUser() != null) {
             String userId = firebaseAuth.getCurrentUser().getUid();
@@ -119,18 +129,55 @@ public class HomeActivity extends AppCompatActivity {
                 public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
                     if (value != null && value.exists()) {
                         String imageUrl = value.getString("imageUrl");
-                        Log.d("image url", imageUrl);
-                        Glide.with(HomeActivity.this)
-                                .load(imageUrl)
-                                .placeholder(R.drawable.profile)
-                                .into(navHeaderImage);
                         String fullName = value.getString("fullNameOrRepresentative");
                         navHeaderName.setText(fullName);
+
+                        File profileImageFile = new File(getFilesDir(), "profile.jpg");
+                        SharedPreferences prefs = getSharedPreferences("ProfilePrefs", MODE_PRIVATE);
+                        long lastUpdatedTime = prefs.getLong("profile_image_timestamp", 0);
+                        long currentTime = System.currentTimeMillis();
+
+                        if (profileImageFile.exists() && (currentTime - lastUpdatedTime) < IMAGE_EXPIRY_DURATION) {
+                            Log.d("using_cache", "from storage");
+                            Bitmap bitmap = BitmapFactory.decodeFile(profileImageFile.getAbsolutePath());
+                            navHeaderImage.setImageBitmap(bitmap);
+                        } else {
+                            Log.d("using_live", "from firebase");
+                            downloadAndCacheImage(imageUrl, profileImageFile);
+                        }
                     }
                 }
             });
         }
     }
+
+    private void downloadAndCacheImage(String imageUrl, File file) {
+        Glide.with(this)
+                .asBitmap()
+                .load(imageUrl)
+                .placeholder(R.drawable.profile)
+                .into(new CustomTarget<Bitmap>() {
+                    @Override
+                    public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+                        navHeaderImage.setImageBitmap(resource);
+                        saveImageToInternalStorage(resource, file);
+                        SharedPreferences prefs = getSharedPreferences("ProfilePrefs", MODE_PRIVATE);
+                        prefs.edit().putLong("profile_image_timestamp", System.currentTimeMillis()).apply();
+                    }
+
+                    @Override
+                    public void onLoadCleared(@Nullable Drawable placeholder) {}
+                });
+    }
+
+    private void saveImageToInternalStorage(Bitmap bitmap, File file) {
+        try (FileOutputStream fos = new FileOutputStream(file)) {
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     public void loadFragment(Fragment fragment) {
         getSupportFragmentManager()

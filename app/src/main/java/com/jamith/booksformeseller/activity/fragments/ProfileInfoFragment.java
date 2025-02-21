@@ -1,10 +1,15 @@
 package com.jamith.booksformeseller.activity.fragments;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -25,6 +30,8 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.CustomTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -43,6 +50,9 @@ import com.jamith.booksformeseller.service.SignUpService;
 import com.jamith.booksformeseller.util.StorageFolders;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 public class ProfileInfoFragment extends Fragment {
 
@@ -185,10 +195,10 @@ public class ProfileInfoFragment extends Fragment {
                     if (value != null && value.exists()) {
 
                         Profile profile = value.toObject(Profile.class);
-                        Glide.with(getActivity())
-                                .load(profile.getImageUrl())
-                                .placeholder(R.drawable.profile)
-                                .into(profileImage);
+//                        Glide.with(getActivity())
+//                                .load(profile.getImageUrl())
+//                                .placeholder(R.drawable.profile)
+//                                .into(profileImage);
                         imageUrl = profile.getImageUrl();
                         Log.d("address", profile.getAddress().toString());
                         Log.d("businessDetails", profile.getBusinessDetails().toString());
@@ -203,12 +213,95 @@ public class ProfileInfoFragment extends Fragment {
                         etState.setText(profile.getAddress().get("state"));
                         etCountry.setText(profile.getAddress().get("country"));
                         etPostalCode.setText(profile.getAddress().get("postalCode"));
+
+
+                        File profileImageFile = new File(homeActivity.getFilesDir(), "profile.jpg");
+                        SharedPreferences prefs = homeActivity.getSharedPreferences("ProfilePrefs", MODE_PRIVATE);
+                        long lastUpdatedTime = prefs.getLong("profile_image_timestamp", 0);
+                        long currentTime = System.currentTimeMillis();
+
+                        if (profileImageFile.exists() && (currentTime - lastUpdatedTime) < IMAGE_EXPIRY_DURATION) {
+                            Log.d("info_using_cache", "from storage");
+                            Bitmap bitmap = BitmapFactory.decodeFile(profileImageFile.getAbsolutePath());
+                            profileImage.setImageBitmap(bitmap);
+                        } else {
+                            Log.d("info_using_live", "from firebase");
+                            downloadAndCacheImage(imageUrl, profileImageFile);
+                        }
+
                     }
                 }
             });
         }
-
     }
+
+
+
+
+
+    private final long IMAGE_EXPIRY_DURATION = 24 * 60 * 60 * 1000;
+//    private void loadProfileData() {
+//        if (firebaseAuth.getCurrentUser() != null) {
+//            String userId = firebaseAuth.getCurrentUser().getUid();
+//            DocumentReference userRef = firebaseFirestore.collection("sellers").document(userId);
+//            userRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+//                @Override
+//                public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+//                    if (value != null && value.exists()) {
+//                        String imageUrl = value.getString("imageUrl");
+//                        String fullName = value.getString("fullNameOrRepresentative");
+//                        navHeaderName.setText(fullName);
+//
+//                        File profileImageFile = new File(getFilesDir(), "profile.jpg");
+//                        SharedPreferences prefs = getSharedPreferences("ProfilePrefs", MODE_PRIVATE);
+//                        long lastUpdatedTime = prefs.getLong("profile_image_timestamp", 0);
+//                        long currentTime = System.currentTimeMillis();
+//
+//                        if (profileImageFile.exists() && (currentTime - lastUpdatedTime) < IMAGE_EXPIRY_DURATION) {
+//                            Log.d("using_cache", "from storage");
+//                            Bitmap bitmap = BitmapFactory.decodeFile(profileImageFile.getAbsolutePath());
+//                            profileImage.setImageBitmap(bitmap);
+//                        } else {
+//                            Log.d("using_live", "from firebase");
+//                            downloadAndCacheImage(imageUrl, profileImageFile);
+//                        }
+//                    }
+//                }
+//            });
+//        }
+//    }
+
+    private void downloadAndCacheImage(String imageUrl, File file) {
+        Glide.with(this)
+                .asBitmap()
+                .load(imageUrl)
+                .placeholder(R.drawable.profile)
+                .into(new CustomTarget<Bitmap>() {
+                    @Override
+                    public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+                        profileImage.setImageBitmap(resource);
+                        saveImageToInternalStorage(resource, file);
+                        SharedPreferences prefs = homeActivity.getSharedPreferences("ProfilePrefs", MODE_PRIVATE);
+                        prefs.edit().putLong("profile_image_timestamp", System.currentTimeMillis()).apply();
+                    }
+
+                    @Override
+                    public void onLoadCleared(@Nullable Drawable placeholder) {}
+                });
+    }
+
+    private void saveImageToInternalStorage(Bitmap bitmap, File file) {
+        try (FileOutputStream fos = new FileOutputStream(file)) {
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
+
+
 
 
     private void saveProfileChanges() {
@@ -248,6 +341,14 @@ public class ProfileInfoFragment extends Fragment {
                         Log.d("image upload success", o.toString());
                         sellerUpdateDTO.setImageUrl(sellerImageDownloadUrl);
                         saveData(sellerUpdateDTO);
+                        File profileImageFile = new File(homeActivity.getFilesDir(), "profile.jpg");
+                        if (profileImageFile.exists()) {
+                            if (profileImageFile.delete()) {
+                                Log.d("Profile Image", "Cached profile image deleted successfully.");
+                            } else {
+                                Log.e("Profile Image", "Failed to delete cached profile image.");
+                            }
+                        }
                     });
                 }
             }, new OnFailureListener() {
