@@ -195,10 +195,6 @@ public class ProfileInfoFragment extends Fragment {
                     if (value != null && value.exists()) {
 
                         Profile profile = value.toObject(Profile.class);
-//                        Glide.with(getActivity())
-//                                .load(profile.getImageUrl())
-//                                .placeholder(R.drawable.profile)
-//                                .into(profileImage);
                         imageUrl = profile.getImageUrl();
                         Log.d("address", profile.getAddress().toString());
                         Log.d("businessDetails", profile.getBusinessDetails().toString());
