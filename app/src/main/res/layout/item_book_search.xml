@@ -31,6 +31,7 @@
                 android:id="@+id/titleTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat_bold"
                 android:text="Title"
                 android:textSize="16sp"
                 android:textStyle="bold" />
@@ -39,6 +40,7 @@
                 android:id="@+id/authorTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat_bold"
                 android:text="Author"
                 android:textSize="14sp" />
         </LinearLayout>

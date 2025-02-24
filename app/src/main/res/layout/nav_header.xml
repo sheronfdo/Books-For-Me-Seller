@@ -20,8 +20,9 @@
         android:id="@+id/nav_profile_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:fontFamily="@font/montserrat_bold"
         android:text="User Name"
-        android:textSize="24sp"
         android:textColor="@android:color/white"
-        android:layout_gravity="center_horizontal"/>
+        android:textSize="24sp" />
 </LinearLayout>

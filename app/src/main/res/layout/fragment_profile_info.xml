@@ -50,6 +50,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_margin="4dp"
+                    android:fontFamily="@font/montserrat_bold"
                     android:text="Change Image" />
 
                 <TextView
@@ -64,6 +65,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="2dp"
+                    android:fontFamily="@font/montserrat_bold"
                     android:hint="Full Name" />
 
                 <!-- Email (Read-Only) -->
@@ -73,6 +75,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="2dp"
                     android:enabled="false"
+                    android:fontFamily="@font/montserrat_bold"
                     android:hint="Email" />
 
                 <!-- Phone Number -->
@@ -81,6 +84,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="2dp"
+                    android:fontFamily="@font/montserrat_bold"
                     android:hint="Phone Number" />
 
                 <!-- Company Name -->
@@ -96,6 +100,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="2dp"
+                    android:fontFamily="@font/montserrat_bold"
                     android:hint="Company Name" />
 
                 <!-- Business Registration Number -->
@@ -104,6 +109,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="2dp"
+                    android:fontFamily="@font/montserrat_bold"
                     android:hint="Business Registration Number" />
 
                 <!-- Address Fields -->
@@ -119,6 +125,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="2dp"
+                    android:fontFamily="@font/montserrat_bold"
                     android:hint="Street" />
 
                 <EditText
@@ -126,6 +133,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="2dp"
+                    android:fontFamily="@font/montserrat_bold"
                     android:hint="City" />
 
                 <EditText
@@ -133,6 +141,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="2dp"
+                    android:fontFamily="@font/montserrat_bold"
                     android:hint="State" />
 
                 <EditText
@@ -140,6 +149,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="2dp"
+                    android:fontFamily="@font/montserrat_bold"
                     android:hint="Country" />
 
                 <EditText
@@ -147,6 +157,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="2dp"
+                    android:fontFamily="@font/montserrat_bold"
                     android:hint="Postal Code" />
 
                 <!-- Save Changes Button -->

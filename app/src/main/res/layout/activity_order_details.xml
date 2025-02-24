@@ -25,6 +25,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
+                android:fontFamily="@font/montserrat_bold"
                 android:gravity="center"
                 android:text="Order Item Details"
                 android:textSize="20sp"
@@ -47,6 +48,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:fontFamily="@font/montserrat_bold"
                     android:text="Title: "
                     android:textSize="16sp" />
 
@@ -56,6 +58,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
                     android:layout_weight="1"
+                    android:fontFamily="@font/montserrat_bold"
                     android:gravity="end"
                     android:text="Title: Love Beyond Time"
                     android:textSize="16sp" />
@@ -71,6 +74,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:fontFamily="@font/montserrat_bold"
                     android:text="Quantity: "
                     android:textSize="16sp" />
 
@@ -80,6 +84,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
                     android:layout_weight="1"
+                    android:fontFamily="@font/montserrat_bold"
                     android:gravity="end"
                     android:text="Quantity: 1"
                     android:textSize="16sp" />
@@ -95,6 +100,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:fontFamily="@font/montserrat_bold"
                     android:text="Price: "
                     android:textSize="16sp" />
 
@@ -104,6 +110,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
                     android:layout_weight="1"
+                    android:fontFamily="@font/montserrat_bold"
                     android:gravity="end"
                     android:text="Price: 2000"
                     android:textSize="16sp" />
@@ -119,6 +126,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:fontFamily="@font/montserrat_bold"
                     android:text="Total Price: "
                     android:textSize="16sp" />
 
@@ -128,6 +136,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
                     android:layout_weight="1"
+                    android:fontFamily="@font/montserrat_bold"
                     android:gravity="end"
                     android:text=" 2230"
                     android:textSize="16sp" />
@@ -142,6 +151,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/montserrat_bold"
                     android:text="Order Status: "
                     android:textSize="16sp" />
 
@@ -151,6 +161,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
                     android:layout_weight="1"
+                    android:fontFamily="@font/montserrat_bold"
                     android:gravity="end"
                     android:text="Order Status: "
                     android:textSize="16sp" />
@@ -176,6 +187,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
+                android:fontFamily="@font/montserrat_bold"
                 android:text="Update Status" />
 
             <View
@@ -298,6 +310,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
                 android:layout_marginTop="8dp"
+                android:fontFamily="@font/montserrat_bold"
                 android:text="Contact Receiver" />
         </LinearLayout>
     </ScrollView>
