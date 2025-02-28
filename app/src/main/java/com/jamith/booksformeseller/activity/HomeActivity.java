@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -60,6 +61,7 @@ public class HomeActivity extends AppCompatActivity {
     private TextView navHeaderName;
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     private FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
+    private ProgressBar progressBar;
 
     @SuppressLint("NonConstantResourceId")
     @Override
@@ -72,8 +74,8 @@ public class HomeActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-
-
+        progressBar = findViewById(R.id.activityHomeProgressBar);
+        progressBar.setVisibility(View.VISIBLE);
         fragmentContainer = findViewById(R.id.fragmentContainer);
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
         drawerLayout = findViewById(R.id.drawer_layout);
@@ -146,6 +148,7 @@ public class HomeActivity extends AppCompatActivity {
                             downloadAndCacheImage(imageUrl, profileImageFile);
                         }
                     }
+                    progressBar.setVisibility(View.GONE);
                 }
             });
         }

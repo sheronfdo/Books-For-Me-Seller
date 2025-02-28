@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -27,6 +28,7 @@ public class SignInActivity extends AppCompatActivity {
     private Button signInButton;
 
     private SignInService signInService;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +40,7 @@ public class SignInActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        progressBar = findViewById(R.id.activitySignInprogressBar);
         signInService = new SignInService();
         emailEditText = findViewById(R.id.signInEmailAddress);
         passwordEditText = findViewById(R.id.signInPassword);
@@ -47,13 +50,13 @@ public class SignInActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String email = emailEditText.getText().toString().trim();
                 String password = passwordEditText.getText().toString().trim();
-
+                progressBar.setVisibility(View.VISIBLE);
                 if (validateInput(email, password)) {
                     signInService.signInUser(email, password, new SignInService.SignInCallback() {
                         @Override
                         public void onSuccess() {
                             Toast.makeText(SignInActivity.this, "Sign-in successful!", Toast.LENGTH_SHORT).show();
-                            // Navigate to main activity
+                            progressBar.setVisibility(View.VISIBLE);
                             Intent intent = new Intent(SignInActivity.this, HomeActivity.class);
                             startActivity(intent);
                             finish();
@@ -61,7 +64,6 @@ public class SignInActivity extends AppCompatActivity {
 
                         @Override
                         public void onFailure(String errorMessage) {
-                            // Sign-in failure
                             Toast.makeText(SignInActivity.this, errorMessage, Toast.LENGTH_LONG).show();
                         }
                     });

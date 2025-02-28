@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ProgressBar;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -32,6 +33,7 @@ public class InventoryFragment extends Fragment {
     List<BookStockData> bookStockDataList = new ArrayList<>();
     SellerInventoryAdapter sellerInventoryAdapter;
     RecyclerView bookListRecyclerView;
+    ProgressBar progressBar;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -44,6 +46,8 @@ public class InventoryFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_inventory, container, false);
+        progressBar = view.findViewById(R.id.inventoryFragmentprogressBar);
+        progressBar.setVisibility(View.VISIBLE);
         addNewBookButton = view.findViewById(R.id.addNewBookButton);
         addNewBookButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,6 +98,6 @@ public class InventoryFragment extends Fragment {
                 .addOnFailureListener(e -> {
                     Log.e("FirestoreError", "Error fetching data", e);
                 });
-
+        progressBar.setVisibility(View.GONE);
     }
 }

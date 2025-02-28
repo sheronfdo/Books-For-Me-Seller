@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -34,6 +35,7 @@ public class SearchBookActivity extends AppCompatActivity {
     private RecyclerView searchResultsRecyclerView;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    private ImageButton backButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +47,14 @@ public class SearchBookActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        backButton = findViewById(R.id.activity_search_book_back_button);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         searchInput = findViewById(R.id.addNewBookStockTitleEditText);
         searchResultsRecyclerView = findViewById(R.id.searchResultsRecyclerView);
         bookSearchAdapter = new BookSearchAdapter(this, bookList, new BookSearchAdapter.OnItemClickListener() {
@@ -52,7 +62,7 @@ public class SearchBookActivity extends AppCompatActivity {
             public void onItemClick(Book book) {
                 Log.d("Selected Book Is == ", book.toString());
                 Intent intent = new Intent(SearchBookActivity.this, AddBookStockActivity.class);
-                intent.putExtra("book", book); // Pass the selected book object
+                intent.putExtra("book", book);
                 startActivity(intent);
             }
         });
@@ -82,8 +92,7 @@ public class SearchBookActivity extends AppCompatActivity {
             return;
         }
         Log.d("Searching", "Searching");
-        // Query centralizedBooks collection by title or ISBN
-        db.collection("books").whereEqualTo("title", query) // Search by title
+        db.collection("books").whereEqualTo("title", query)
                 .get().addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         bookList.clear();
@@ -91,7 +100,7 @@ public class SearchBookActivity extends AppCompatActivity {
 
                             Log.d("iten", document.getId());
                             Book book = document.toObject(Book.class);
-                            book.setBookId(document.getId()); // Set Firestore document ID
+                            book.setBookId(document.getId());
                             bookList.add(book);
                         }
                         bookSearchAdapter.notifyDataSetChanged();

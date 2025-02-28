@@ -12,7 +12,9 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.NumberPicker;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -62,8 +64,9 @@ public class AddNewBookActivity extends AppCompatActivity {
     private static final int PICK_IMAGE_REQUEST = 1;
     private static final int PERMISSION_REQUEST_CODE = 100;
     Uri bookCoverImage;
-
+    private ProgressBar progressBar;
     String bookCoverImageDownloadUrl;
+    private ImageButton backButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +83,15 @@ public class AddNewBookActivity extends AppCompatActivity {
         } else {
             requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CODE);
         }
+        progressBar = findViewById(R.id.activityAddNewBookprogressBar);
+        progressBar.setVisibility(View.GONE);
+        backButton = findViewById(R.id.activity_add_new_book_back_button);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         dataRepo = new DataRepository(this);
 
@@ -132,6 +144,7 @@ public class AddNewBookActivity extends AppCompatActivity {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                progressBar.setVisibility(View.VISIBLE);
                 gatherImageDetails();
             }
         });
@@ -244,6 +257,7 @@ public class AddNewBookActivity extends AppCompatActivity {
             }, new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
+                    progressBar.setVisibility(View.GONE);
                     Toast.makeText(AddNewBookActivity.this, "Failed to upload file: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             });
@@ -284,7 +298,7 @@ public class AddNewBookActivity extends AppCompatActivity {
             @Override
             public void onSuccess(BookAddResponseDTO response) {
                 runOnUiThread(() -> {
-//                    progressBar.setVisibility(View.GONE);
+                    progressBar.setVisibility(View.GONE);
                     Toast.makeText(AddNewBookActivity.this, "Book Added successfully!", Toast.LENGTH_LONG).show();
                     Intent intent = new Intent(AddNewBookActivity.this, SearchBookActivity.class);
                     startActivity(intent);
@@ -295,7 +309,7 @@ public class AddNewBookActivity extends AppCompatActivity {
             @Override
             public void onError(String errorMessage) {
                 runOnUiThread(() -> {
-//                    progressBar.setVisibility(View.GONE);
+                    progressBar.setVisibility(View.GONE);
                     Toast.makeText(AddNewBookActivity.this, "Error: " + errorMessage, Toast.LENGTH_LONG).show();
                 });
             }
@@ -303,7 +317,7 @@ public class AddNewBookActivity extends AppCompatActivity {
             @Override
             public void onFailure(String failureMessage) {
                 runOnUiThread(() -> {
-//                    progressBar.setVisibility(View.GONE);
+                    progressBar.setVisibility(View.GONE);
                     Toast.makeText(AddNewBookActivity.this, "Failure: " + failureMessage, Toast.LENGTH_LONG).show();
                 });
             }

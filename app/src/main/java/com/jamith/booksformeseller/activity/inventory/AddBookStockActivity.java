@@ -6,7 +6,9 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,6 +38,8 @@ public class AddBookStockActivity extends AppCompatActivity {
     private Button AddBookStockActivitySubmitInventoryButton;
     private BookStockService bookStockService = new BookStockService();
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    private ImageButton backButton;
+    private ProgressBar progressBar;
 
 
     @Override
@@ -48,6 +52,9 @@ public class AddBookStockActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        progressBar = findViewById(R.id.activity_add_book_stock_progressBar);
+        progressBar.setVisibility(View.GONE);
         Book book = (Book) getIntent().getSerializableExtra("book");
         AddBookStockActivityBookCoverImageView = findViewById(R.id.AddBookStockActivityBookCoverImageView);
         AddBookStockActivityBookTitleTextView = findViewById(R.id.AddBookStockActivityBookTitleTextView);
@@ -59,10 +66,17 @@ public class AddBookStockActivity extends AppCompatActivity {
         AddBookStockActivitySubmitInventoryButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                progressBar.setVisibility(View.VISIBLE);
                 addInventoryStock(book);
             }
         });
-
+        backButton = findViewById(R.id.activity_add_book_stock_back_button);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
                 this,
                 R.array.conditions_array,
@@ -111,7 +125,7 @@ public class AddBookStockActivity extends AppCompatActivity {
                 @Override
                 public void onSuccess(BookAddResponseDTO response) {
                     runOnUiThread(() -> {
-//                    progressBar.setVisibility(View.GONE);
+                    progressBar.setVisibility(View.GONE);
                         Toast.makeText(AddBookStockActivity.this, "Book Stock Added successfully!", Toast.LENGTH_LONG).show();
                         Intent intent = new Intent(AddBookStockActivity.this, SearchBookActivity.class);
                         startActivity(intent);
@@ -122,7 +136,7 @@ public class AddBookStockActivity extends AppCompatActivity {
                 @Override
                 public void onError(String errorMessage) {
                     runOnUiThread(() -> {
-//                    progressBar.setVisibility(View.GONE);
+                    progressBar.setVisibility(View.GONE);
                         Toast.makeText(AddBookStockActivity.this, "Error: " + errorMessage, Toast.LENGTH_LONG).show();
                     });
                 }
@@ -130,7 +144,7 @@ public class AddBookStockActivity extends AppCompatActivity {
                 @Override
                 public void onFailure(String failureMessage) {
                     runOnUiThread(() -> {
-//                    progressBar.setVisibility(View.GONE);
+                    progressBar.setVisibility(View.GONE);
                         Toast.makeText(AddBookStockActivity.this, "Failure: " + failureMessage, Toast.LENGTH_LONG).show();
                     });
                 }

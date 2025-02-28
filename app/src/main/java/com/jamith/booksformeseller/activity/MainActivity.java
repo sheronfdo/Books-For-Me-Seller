@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -25,6 +26,7 @@ import com.jamith.booksformeseller.service.MessageService;
 public class MainActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private static final int SPLASH_DURATION = 2000;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,8 +38,11 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        progressBar = findViewById(R.id.mainActivityprogressBar);
+        progressBar.setVisibility(View.VISIBLE);
         mAuth = FirebaseAuth.getInstance();
         if (mAuth.getCurrentUser() != null) {
+            progressBar.setVisibility(View.GONE);
             startActivity(new Intent(this, HomeActivity.class));
             finish();
         }
@@ -45,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
         syncManager.performInitialSync(success -> {
             Log.d("fetch success", "fetching succeess");
         });
-
+        progressBar.setVisibility(View.GONE);
         Button signUpButton = findViewById(R.id.sign_up_button);
         signUpButton.setOnClickListener(v -> {
             v.animate().scaleX(0.9f).scaleY(0.9f).setDuration(100)

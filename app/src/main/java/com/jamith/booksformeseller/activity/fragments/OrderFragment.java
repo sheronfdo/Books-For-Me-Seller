@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -25,11 +26,14 @@ public class OrderFragment extends Fragment {
     private List<OrderItem> orders;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private FirebaseAuth auth = FirebaseAuth.getInstance();
+    private ProgressBar progressBar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_order, container, false);
+        progressBar = view.findViewById(R.id.orderFragmentprogressBar);
+        progressBar.setVisibility(View.VISIBLE);
         ordersRecyclerView = view.findViewById(R.id.orders_recycler_view);
         ordersRecyclerView.setLayoutManager(new LinearLayoutManager(view.getContext(), LinearLayoutManager.VERTICAL, false));
         orders = new ArrayList<>();
@@ -48,6 +52,7 @@ public class OrderFragment extends Fragment {
                             orders.add(order);
                         }
                         setupOrdersAdapter();
+                        progressBar.setVisibility(View.GONE);
                     } else {
 
                     }

@@ -6,7 +6,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,7 +42,8 @@ public class OrderDetailsActivity extends AppCompatActivity {
     private String recieverEmail;
     private String recieverAddress;
     private OrderService orderService = new OrderService();
-
+    private ImageButton backButton;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +55,19 @@ public class OrderDetailsActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+
+        backButton = findViewById(R.id.activity_order_details_back_button);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+        progressBar  = findViewById(R.id.activityOrderDetailsprogressBar);
+
+
+
         tvOrderItemName = findViewById(R.id.tv_order_item_name);
         tvOrderItemQuantity = findViewById(R.id.tv_order_item_quantity);
         tvOrderItemPrice = findViewById(R.id.tv_order_item_price);
@@ -72,6 +88,7 @@ public class OrderDetailsActivity extends AppCompatActivity {
         btnUpdateStatus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                progressBar.setVisibility(View.VISIBLE);
                 updateOrderStatus();
             }
         });
@@ -135,6 +152,7 @@ public class OrderDetailsActivity extends AppCompatActivity {
             @Override
             public void onSuccess(OrderResponseDTO response) {
                 runOnUiThread(() -> {
+                    progressBar.setVisibility(View.GONE);
                     Toast.makeText(OrderDetailsActivity.this, "Status Updated Successful.", Toast.LENGTH_LONG).show();
                     finish();
                 });
@@ -143,6 +161,7 @@ public class OrderDetailsActivity extends AppCompatActivity {
             @Override
             public void onError(String errorMessage) {
                 runOnUiThread(() -> {
+                    progressBar.setVisibility(View.GONE);
                     Toast.makeText(OrderDetailsActivity.this, "Error: " + errorMessage, Toast.LENGTH_LONG).show();
                 });
             }
@@ -150,6 +169,7 @@ public class OrderDetailsActivity extends AppCompatActivity {
             @Override
             public void onFailure(String failureMessage) {
                 runOnUiThread(() -> {
+                    progressBar.setVisibility(View.GONE);
                     Toast.makeText(OrderDetailsActivity.this, "Error: " + failureMessage, Toast.LENGTH_LONG).show();
                 });
             }
